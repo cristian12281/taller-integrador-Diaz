@@ -2,70 +2,65 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>pagina</title>
-    <link rel="stylesheet" href="Estilos Del Sitio.CSS">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Promedio - Taller Integrador</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <div class="cont1">
+    <main class="cont1">
         <h1>Calculadora de Promedio</h1>
-        <p>Ingrese las tres notas del corte para calcular el promedio.</p>
+        <p>Ingrese las tres notas del corte para calcular el promedio ponderado.</p>
 
-        <label>Nota 1:</label>
-        <input type="number" id="n1" step="0.1">
+        <div class="input-group">
+            <label for="n1">Nota 1:</label>
+            <input type="number" id="n1" step="0.1" min="0" max="5">
+        </div>
 
-        <label>Nota 2:</label>
-        <input type="number" id="n2" step="0.1">
+        <div class="input-group">
+            <label for="n2">Nota 2:</label>
+            <input type="number" id="n2" step="0.1" min="0" max="5">
+        </div>
 
-        <label>Nota 3:</label>
-        <input type="number" id="n3" step="0.1">
+        <div class="input-group">
+            <label for="n3">Nota 3:</label>
+            <input type="number" id="n3" step="0.1" min="0" max="5">
+        </div>
 
-        <button onclick="calc()">Calcular</button>
+        <button onclick="calcularPromedio()">Calcular Promedio</button>
 
-        <p id="r"></p>
-        <p id="r2"></p>
-    </div>
+        <p id="r" class="result-text"></p>
+        <p id="r2" class="result-text"></p>
+    </main>
 
-<script>
+    <script>
+        function calcularPromedio() {
+            const n1 = parseFloat(document.getElementById("n1").value);
+            const n2 = parseFloat(document.getElementById("n2").value);
+            const n3 = parseFloat(document.getElementById("n3").value);
 
-let data1 = [];
-let TempValue2 = 0;
-let x = 3;
+            const elementoResultado = document.getElementById("r");
+            const elementoEstado = document.getElementById("r2");
 
-function calc() {
+            if (isNaN(n1) || isNaN(n2) || isNaN(n3)) {
+                elementoResultado.textContent = "Por favor, ingrese todas las notas requeridas.";
+                elementoEstado.textContent = "";
+                return;
+            }
 
-    let a = parseFloat(document.getElementById("n1").value);
-    let b = parseFloat(document.getElementById("n2").value);
-    let c = parseFloat(document.getElementById("n3").value);
+            const promedio = (n1 + n2 + n3) / 3;
 
-    console.log("valores capturados:", a, b, c);
+            elementoResultado.textContent = `Promedio: ${promedio.toFixed(2)}`;
 
-    if (isNaN(a) || isNaN(b) || isNaN(c)) {
-        document.getElementById("r").innerHTML = "Debe ingresar las tres notas.";
-        return;
-    }
-
-    TempValue2 = (a + b + c) / x;
-
-    document.getElementById("r").innerHTML = "Promedio: " + TempValue2.toFixed(2);
-
-    if (TempValue2 >= 3.0) {
-        document.getElementById("r2").innerHTML = "Resultado: aprobado";
-    } else {
-        document.getElementById("r2").innerHTML = "Resultado: reprobado";
-    }
-
-    console.log("promedio calculado");
-}
-
-// function calcularAntiguo(nota1, nota2) {
-//     let suma = nota1 + nota2;
-//     return suma / 2;
-// }
-
-console.log("pagina cargada");
-
-</script>
+            if (promedio >= 3.0) {
+                elementoEstado.textContent = "Resultado: Aprobado";
+                elementoEstado.style.color = "green";
+            } else {
+                elementoEstado.textContent = "Resultado: Reprobado";
+                elementoEstado.style.color = "red";
+            }
+        }
+    </script>
 
 </body>
 </html>
